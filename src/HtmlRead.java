@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class HtmlRead {
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         HtmlRead html = new HtmlRead();
     }
-
+*/
     public HtmlRead() {
 
         try {
