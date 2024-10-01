@@ -12,22 +12,16 @@ public class HtmlRead {
     public HtmlRead() {
 
         try {
-            Scanner scan = new Scanner(System.in);
+            URL url = new URL(SwingControlDemo.getLinkInput());
+            String keyword = SwingControlDemo.getKeywordInput();
+            //System.out.println(url + "," + keyword);
 
-            System.out.println();
-            System.out.print("enter URL:");
-            URL url = new URL(scan.nextLine());
-            System.out.println("enter keyword:");
-            String keyword = scan.nextLine();
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(url.openStream()));
             String line;
             while ( (line = reader.readLine()) != null ) {
                 if(line.contains("href")) {
                     pullLink(line, keyword);
-
-
-
                 }
             }
             reader.close();
@@ -54,8 +48,8 @@ public class HtmlRead {
         }
         // System.out.println(start + "," + end);
         //System.out.println("normal line:" + line);
-        if (line.substring(start, start+end).contains(keyword)) {
-            System.out.println(line.substring(start, start + end));
+        if (line.substring(start, start+end).toLowerCase().contains(keyword.toLowerCase())) {
+            SwingControlDemo.writeToOutput(line.substring(start, start + end));
         }
        // System.out.println(line.substring(start+1));
         //test for multiple links in the line
@@ -64,4 +58,6 @@ public class HtmlRead {
             pullLink(line.substring(start), keyword);
         }
     }
+
+
 }
