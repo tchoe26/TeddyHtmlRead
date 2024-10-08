@@ -22,6 +22,7 @@ public class HtmlRead {
             while ( (line = reader.readLine()) != null ) {
                 if(line.contains("href")) {
                     pullLink(line, keyword);
+
                 }
             }
             reader.close();
@@ -48,8 +49,9 @@ public class HtmlRead {
         }
         // System.out.println(start + "," + end);
         //System.out.println("normal line:" + line);
-        if (line.substring(start, start+end).toLowerCase().contains(keyword.toLowerCase())) {
-            SwingControlDemo.writeToOutput(line.substring(start, start + end));
+        String substring = line.substring(start, start + end);
+        if (substring.toLowerCase().contains(keyword.toLowerCase())) {
+            SwingControlDemo.writeToOutput(substring);
         }
        // System.out.println(line.substring(start+1));
         //test for multiple links in the line
@@ -57,6 +59,19 @@ public class HtmlRead {
             //System.out.println("contains nested links");
             pullLink(line.substring(start), keyword);
         }
+    }
+    public void pullImage(String line) {
+        int start = (line.indexOf("src="))+5;
+        String link = line.substring(start);
+
+        int end = link.indexOf("\"");
+        if (end==-1) {
+            end = link.indexOf("'");
+        } if (end==-1) {
+            end = link.indexOf("--");
+        }
+        String substring = line.substring(start, start + end);
+        System.out.println(substring);
     }
 
 

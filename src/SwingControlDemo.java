@@ -28,15 +28,15 @@ public class SwingControlDemo implements ActionListener {
     }
 
     private void prepareGUI() {
-        mainFrame = new JFrame("teddy learning swing");
+        mainFrame = new JFrame("teddy's HTML reader");
         mainFrame.setSize(WIDTH, HEIGHT);
-        mainFrame.setLayout(new GridLayout(1, 2));
+        mainFrame.setLayout(new BorderLayout());
 
         controlPanel = new JPanel();
         controlPanel.setLayout(new GridLayout(5, 1));
 
         controlPanel2 = new JPanel();
-        controlPanel2.setLayout(new GridLayout(1, 1));
+        controlPanel2.setLayout(new BorderLayout());
 
         linkInput = new JTextArea();
         linkInput.setBounds(50, 5, WIDTH-100, 100);
@@ -71,9 +71,9 @@ public class SwingControlDemo implements ActionListener {
         button1.setActionCommand("Start");
         button1.addActionListener(this);
 
-        JLabel label1 = new JLabel("input link", JLabel.CENTER);
+        JLabel label1 = new JLabel("            input link            ", JLabel.CENTER);
         JLabel label2 = new JLabel("input keyword", JLabel.CENTER);
-
+        //JLabel image = new JLabel(imageIcon);
         okButton.setActionCommand("OK");
         submitButton.setActionCommand("Submit");
         cancelButton.setActionCommand("Cancel");
@@ -86,9 +86,10 @@ public class SwingControlDemo implements ActionListener {
         mainFrame.add(button2);
         mainFrame.add(button3);
         mainFrame.add(button4);*/
-        mainFrame.add(controlPanel);
+        mainFrame.add(controlPanel, BorderLayout.WEST);
         mainFrame.add(controlPanel2);
 
+        //controlPanel.add(label4);
         controlPanel.add(label1);
         controlPanel.add(linkInput);
         controlPanel.add(label2);
