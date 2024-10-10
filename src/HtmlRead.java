@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Scanner;
 
+
 public class HtmlRead {
 
    /* public static void main(String[] args) {
@@ -27,7 +28,7 @@ public class HtmlRead {
             }
             reader.close();
         } catch(Exception ex) {
-            System.out.println(ex);
+            SwingControlDemo.errorMessage();
         }
     }
 

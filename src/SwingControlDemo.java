@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLaf;
+import java.util.Collections;
+
 
 public class SwingControlDemo implements ActionListener {
     private JFrame mainFrame;
@@ -22,8 +26,18 @@ public class SwingControlDemo implements ActionListener {
     }
 
     public static void main(String[] args) {
+        FlatDarculaLaf.setup();
+        FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#40E0D0"));
+        UIManager.put("Button.arc", 20); // Round buttons
+        UIManager.put("Label.arc", 20);
+        UIManager.put("Component.focusColor", Color.CYAN); // Cyan focus color
+        UIManager.put("Panel.background", Color.DARK_GRAY); // Dark gray
+        UIManager.put("TextField.focusedBackground", "#40E0D0");
+        UIManager.put("ScrollBar.thumb", new Color(0x40E0D0)); // Turquoise for thumb
+
         SwingControlDemo swingControlDemo = new SwingControlDemo();
         swingControlDemo.showEventDemo();
+
 
     }
 
@@ -44,8 +58,8 @@ public class SwingControlDemo implements ActionListener {
         keywordInput = new JTextArea();
         keywordInput.setBounds(50, 500, WIDTH-100, 100);
 
-        output = new JTextArea();
-        output.setBounds(50, 1, WIDTH-100, 100);
+
+
 
 
         mainFrame.addWindowListener(new WindowAdapter() {
@@ -58,21 +72,30 @@ public class SwingControlDemo implements ActionListener {
 
     private void showEventDemo() {
 
+        output = new JTextArea();
+        output.setBounds(50, 1, WIDTH-100, 100);
+        output.setLineWrap(true);  // Wrap lines
+        output.setWrapStyleWord(true);  //  Wrap at word boundaries
+
         JButton okButton = new JButton("OK");
         JButton submitButton = new JButton("Submit");
         JButton cancelButton = new JButton("Cancel");
 
-        JButton button1 = new JButton("start");
+        JButton button1 = new JButton("Search");
         JButton button2 = new JButton("Button 2");
         JButton button3 = new JButton("Button 3");
         JButton button4 = new JButton("Button 4");
         JButton button5 = new JButton("Button 5");
 
+        JScrollPane scrollPane = new JScrollPane(output);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         button1.setActionCommand("Start");
         button1.addActionListener(this);
 
-        JLabel label1 = new JLabel("            input link            ", JLabel.CENTER);
-        JLabel label2 = new JLabel("input keyword", JLabel.CENTER);
+        JLabel label1 = new JLabel("Link", JLabel.CENTER);
+        JLabel label2 = new JLabel("Keyword", JLabel.CENTER);
         //JLabel image = new JLabel(imageIcon);
         okButton.setActionCommand("OK");
         submitButton.setActionCommand("Submit");
@@ -86,7 +109,7 @@ public class SwingControlDemo implements ActionListener {
         mainFrame.add(button2);
         mainFrame.add(button3);
         mainFrame.add(button4);*/
-        mainFrame.add(controlPanel, BorderLayout.WEST);
+        mainFrame.add(controlPanel, BorderLayout.NORTH);
         mainFrame.add(controlPanel2);
 
         //controlPanel.add(label4);
@@ -94,9 +117,11 @@ public class SwingControlDemo implements ActionListener {
         controlPanel.add(linkInput);
         controlPanel.add(label2);
         controlPanel.add(keywordInput);
-        controlPanel.add(button1);
+        controlPanel.add(button1, BorderLayout.EAST);
 
-        controlPanel2.add(output);
+        controlPanel2.add(scrollPane);
+
+
 
 
         mainFrame.setVisible(true);
@@ -105,6 +130,7 @@ public class SwingControlDemo implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("Start".equals(e.getActionCommand())) {
+            output.setText("");
             HtmlRead html = new HtmlRead();
         }
 
@@ -129,7 +155,10 @@ public class SwingControlDemo implements ActionListener {
             }
         }
     }
-
+    public static void errorMessage() {
+        output.append("Your URL is invalid. Please check for typos and try again."+ "\n");
+        output.append("Tip: ensure that your URL begins with https://www...");
+    }
     public static void writeToOutput(String outputParameter) {
         output.append(outputParameter+ "\n");
         System.out.println(outputParameter);
